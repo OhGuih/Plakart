@@ -30,15 +30,11 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="chefe_id" class="form-label">Chefe da Equipe (Opcional):</label>
-            <select name="chefe_id" id="chefe_id" class="form-control">
-                <option value="">Nenhum</option>
-                @foreach ($pilotos as $piloto)
-                <option value="{{ $piloto->id }}">{{ $piloto->nome }}</option>
-                @endforeach
-            </select>
+        <div class="form-group">
+            <label for="chefe_nome">Nome do Chefe da Equipe (Opcional)</label>
+            <input type="text" name="chefe_nome" id="chefe_nome" class="form-control" placeholder="Digite o nome do chefe">
         </div>
+
 
         <div class="mb-3">
             <label for="piloto1_nome" class="form-label">Nome do Piloto 1:</label>

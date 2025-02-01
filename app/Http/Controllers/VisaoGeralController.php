@@ -11,7 +11,7 @@ class VisaoGeralController extends Controller
     public function index()
     {
         $campeonatoAtual = Campeonato::latest()->first();
-        $equipes = Equipe::with('pilotos', 'chefe')->get();
+        $equipes = Equipe::with('pilotos')->get();
 
         $totalPilotos = $equipes->sum(fn ($equipe) => $equipe->pilotos->count());
         $limitePilotos = 20;

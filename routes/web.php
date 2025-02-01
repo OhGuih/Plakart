@@ -11,6 +11,5 @@ Route::resource('equipes', EquipeController::class);
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [VisaoGeralController::class, 'index'])->name('home');
+
