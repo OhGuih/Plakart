@@ -1,6 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1 {
+        font-size: 2rem;
+        color:rgb(17, 127, 230);
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .btn-primary {
+        background-color:rgb(17, 127, 230);
+        border-color:rgb(17, 127, 230);
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+        background-color:rgb(17, 127, 230);
+        border-color: #ac2925;
+    }
+</style>
+
 <div class="container">
     <h1>Cadastrar Campeonato</h1>
 

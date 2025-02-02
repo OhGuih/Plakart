@@ -1,10 +1,63 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: auto;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2rem;
+        color:rgb(33, 43, 133);
+        text-align: center;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background-color: #d9534f;
+        border-color: #d9534f;
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+        background-color: #c9302c;
+        border-color: #ac2925;
+    }
+</style>
+
 <div class="container">
     <h1>Lista de Equipes</h1>
 
-    <!-- Selecionar Campeonato -->
     <div class="mb-3">
         <label for="campeonatoFiltro"><strong>Selecionar Campeonato:</strong></label>
         <select id="campeonatoFiltro" class="form-control d-inline-block w-auto">
@@ -17,10 +70,11 @@
         </select>
     </div>
 
-    <a href="{{ route('equipes.create') }}" class="btn btn-success mb-3">Nova Equipe</a>
-    
-    <button id="editarEquipe" class="btn btn-warning mb-3" disabled>Editar</button>
-    <button id="excluirEquipe" class="btn btn-danger mb-3" disabled>Excluir</button>
+    <div class="btn-container">
+        <a href="{{ route('equipes.create') }}" class="btn btn-success">Nova Equipe</a>
+        <button id="editarEquipe" class="btn btn-warning" disabled>Editar</button>
+        <button id="excluirEquipe" class="btn btn-danger" disabled>Excluir</button>
+    </div>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -31,7 +85,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th></th> <!-- Checkbox para seleção -->
+                <th></th>
                 <th>Nome</th>
                 <th>Campeonato</th>
                 <th>Chefe</th>
@@ -68,7 +122,6 @@
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 let selecionados = document.querySelectorAll('.selecionarEquipe:checked');
-
                 editarBtn.disabled = selecionados.length !== 1;
                 excluirBtn.disabled = selecionados.length !== 1;
             });
@@ -99,7 +152,6 @@
             }
         });
 
-        // Filtrar equipes pelo campeonato selecionado
         campeonatoFiltro.addEventListener('change', function() {
             let campeonatoId = this.value;
             let rows = document.querySelectorAll('tbody tr');

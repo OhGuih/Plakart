@@ -1,6 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1, h2 {
+        font-size: 2rem;
+        color:rgb(17, 127, 230);
+    }
+
+    .btn {
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+
+    .table {
+        margin-top: 20px;
+    }
+
+    .table th {
+        background-color:rgb(17, 127, 230);
+        color: white;
+        text-align: center;
+    }
+
+    .table td {
+        text-align: center;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
 <div class="container">
     <h1>Lista de Campeonatos</h1>
     <a href="{{ route('campeonatos.create') }}" class="btn btn-success mb-3">Novo Campeonato</a>

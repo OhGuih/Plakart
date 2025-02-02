@@ -1,6 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1 {
+        font-size: 2rem;
+        color:rgb(99, 138, 245);
+    }
+
+    select {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .table {
+        margin-top: 20px;
+    }
+
+    .table th {
+        background-color:rgb(17, 127, 230);
+        color: white;
+        text-align: center;
+    }
+
+    .table td {
+        text-align: center;
+        background-color: #fff;
+        padding: 10px;
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
 <div class="container">
     <h1 class="text-center">PLAKART</h1>
     
