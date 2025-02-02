@@ -9,10 +9,19 @@ use Illuminate\Http\Request;
 
 class EquipeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $equipes = Equipe::with('pilotos', 'campeonato')->get();
-        return view('equipes.index', compact('equipes'));
+        // Obtém todos os campeonatos para o filtro
+        $campeonatos = Campeonato::all();
+
+        // Filtra as equipes pelo campeonato selecionado
+        $equipes = Equipe::with('pilotos', 'campeonato')
+            ->when($request->campeonato_id, function ($query, $campeonatoId) {
+                return $query->where('campeonato_id', $campeonatoId);
+            })
+            ->get();
+
+        return view('equipes.index', compact('equipes', 'campeonatos'));
     }
 
     public function create()
@@ -26,7 +35,7 @@ class EquipeController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'campeonato_id' => 'required|exists:campeonatos,id',
-            'chefe_nome' => 'nullable|string|max:255', 
+            'chefe_nome' => 'nullable|string|max:255',
             'piloto1_nome' => 'required|string|max:255',
             'piloto1_numero' => 'required|integer|unique:pilotos,numero',
             'piloto2_nome' => 'required|string|max:255',
@@ -48,7 +57,7 @@ class EquipeController extends Controller
         $equipe = Equipe::create([
             'nome' => $request->nome,
             'campeonato_id' => $request->campeonato_id,
-            'chefe_nome' => $request->chefe_nome, 
+            'chefe_nome' => $request->chefe_nome,
         ]);
 
         // Associando os pilotos à equipe
@@ -70,24 +79,27 @@ class EquipeController extends Controller
             'campeonato_id' => 'required|exists:campeonatos,id',
             'chefe_nome' => 'nullable|string|max:255',
             'piloto1_nome' => 'required|string|max:255',
-            'piloto1_numero' => 'required|integer|unique:pilotos,numero,' . $equipe->pilotos[0]->id,
+            'piloto1_numero' => 'required|integer|unique:pilotos,numero,' . optional($equipe->pilotos[0])->id,
             'piloto2_nome' => 'required|string|max:255',
-            'piloto2_numero' => 'required|integer|unique:pilotos,numero,' . $equipe->pilotos[1]->id,
+            'piloto2_numero' => 'required|integer|unique:pilotos,numero,' . optional($equipe->pilotos[1])->id,
         ]);
 
-        // Atualizando os pilotos
-        $piloto1 = $equipe->pilotos[0];
-        $piloto2 = $equipe->pilotos[1];
+        // Atualizando os pilotos (se existirem)
+        if ($equipe->pilotos->count() > 0) {
+            $piloto1 = $equipe->pilotos[0];
+            $piloto1->update([
+                'nome' => $request->piloto1_nome,
+                'numero' => $request->piloto1_numero,
+            ]);
+        }
 
-        $piloto1->update([
-            'nome' => $request->piloto1_nome,
-            'numero' => $request->piloto1_numero,
-        ]);
-
-        $piloto2->update([
-            'nome' => $request->piloto2_nome,
-            'numero' => $request->piloto2_numero,
-        ]);
+        if ($equipe->pilotos->count() > 1) {
+            $piloto2 = $equipe->pilotos[1];
+            $piloto2->update([
+                'nome' => $request->piloto2_nome,
+                'numero' => $request->piloto2_numero,
+            ]);
+        }
 
         // Atualizando a equipe
         $equipe->update([
@@ -101,9 +113,19 @@ class EquipeController extends Controller
 
     public function destroy(Equipe $equipe)
     {
-        $equipe->pilotos()->detach(); // Remove relação com os pilotos
-        $equipe->delete(); // Exclui a equipe
-
-        return redirect()->route('equipes.index')->with('success', 'Equipe excluída com sucesso!');
+        // Obtém os IDs dos pilotos antes de excluir a equipe
+        $pilotoIds = $equipe->pilotos->pluck('id');
+    
+        // Remove a relação da equipe com os pilotos
+        $equipe->pilotos()->detach();
+    
+        // Exclui os pilotos associados à equipe
+        Piloto::whereIn('id', $pilotoIds)->delete();
+    
+        // Exclui a equipe
+        $equipe->delete();
+    
+        return redirect()->route('equipes.index')->with('success', 'Equipe e seus pilotos excluídos com sucesso!');
     }
+    
 }

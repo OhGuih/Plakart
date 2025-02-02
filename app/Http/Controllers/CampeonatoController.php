@@ -9,7 +9,7 @@ class CampeonatoController extends Controller
 {
     public function index()
     {
-        $campeonatos = Campeonato::all();
+        $campeonatos = Campeonato::with('equipes')->get();
         return view('campeonatos.index', compact('campeonatos'));
     }
 
