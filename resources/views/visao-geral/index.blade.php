@@ -19,7 +19,8 @@
 
     h1 {
         font-size: 2rem;
-        color:rgb(99, 138, 245);
+        color: rgb(99, 138, 245);
+        text-align: center;
     }
 
     select {
@@ -29,18 +30,12 @@
         font-size: 1rem;
     }
 
-    p {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-top: 15px;
-    }
-
     .table {
         margin-top: 20px;
     }
 
     .table th {
-        background-color:rgb(17, 127, 230);
+        background-color: rgb(17, 127, 230);
         color: white;
         text-align: center;
     }
@@ -61,7 +56,7 @@
 </style>
 
 <div class="container">
-    <h1 class="text-center">PLAKART</h1>
+    <h1>PLAKART</h1>
     
     <div class="text-center mt-4">
         <h3>CAMPEONATO ATUAL:
@@ -98,11 +93,43 @@
             @endforeach
         </tbody>
     </table>
+
+    <h3 class="mt-4 text-center">Pontuação do Campeonato</h3>
+    <div class="text-center">
+       
+    </div>
+
+    <table class="table table-bordered mt-3" id="tabelaPontuacao">
+        <thead>
+            <tr>
+                <th>Posição</th>
+                <th>Piloto</th>
+                <th>Equipe</th>
+                <th>Pontos</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($pontuacao as $posicao => $piloto)
+                <tr>
+                    <td>{{ $posicao + 1 }}</td>
+                    <td>{{ $piloto->nome }}</td>
+                    <td>{{ $piloto->equipe->first()->nome ?? 'Sem equipe' }}</td>
+                    <td>{{ $piloto->pontos }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
 <script>
     document.getElementById('selecionarCampeonato').addEventListener('change', function() {
         window.location.href = this.value;
+    });
+
+    document.getElementById('selecionarPontuacao').addEventListener('change', function() {
+        let tipo = this.value;
+        let url = tipo === 'geral' ? "{{ route('visao.geral', ['campeonato_id' => $campeonatoAtual->id]) }}" : "{{ route('visao.geral', ['campeonato_id' => $campeonatoAtual->id, 'etapa' => 'selecionada']) }}";
+        window.location.href = url;
     });
 </script>
 @endsection

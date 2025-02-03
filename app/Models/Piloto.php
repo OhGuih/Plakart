@@ -9,5 +9,15 @@ class Piloto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'numero']; // Permite a inserção em massa desses campos
+    protected $table = 'pilotos';
+
+    protected $fillable = [
+        'nome',
+        'numero',
+    ];
+
+    public function equipe()
+    {
+        return $this->belongsToMany(Equipe::class, 'equipe_piloto', 'piloto_id', 'equipe_id');
+    }
 }

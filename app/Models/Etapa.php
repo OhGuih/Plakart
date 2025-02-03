@@ -23,4 +23,9 @@ class Etapa extends Model
     {
         return $this->belongsTo(Campeonato::class);
     }
+
+    public function pilotos()
+    {
+        return $this->belongsToMany(Piloto::class, 'etapa_piloto', 'etapa_id', 'piloto_id')->withPivot('posicao', 'pontos');
+    }
 }

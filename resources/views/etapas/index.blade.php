@@ -5,15 +5,15 @@
     <h1>Gerenciamento de Etapas</h1>
 
     @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
     @endif
 
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
     @endif
 
     <form action="{{ route('etapas.store') }}" method="POST">
@@ -23,7 +23,7 @@
             <select class="form-control" name="campeonato_id" id="campeonato_select" required>
                 <option value="">Selecione um campeonato</option>
                 @foreach($campeonatos as $campeonato)
-                    <option value="{{ $campeonato->id }}" data-max-etapas="{{ $campeonato->etapas }}">{{ $campeonato->nome }}</option>
+                <option value="{{ $campeonato->id }}" data-max-etapas="{{ $campeonato->etapas }}">{{ $campeonato->nome }}</option>
                 @endforeach
             </select>
         </div>
@@ -51,25 +51,34 @@
                 <th>Nome</th>
                 <th>Número</th>
                 <th>Data</th>
+                <th>Resultados</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody id="etapas_table">
             @foreach($etapas as $etapa)
-                <tr data-campeonato="{{ $etapa->campeonato_id }}">
-                    <td>{{ $etapa->id }}</td>
-                    <td>{{ $etapa->campeonato->nome }}</td>
-                    <td>{{ $etapa->nome }}</td>
-                    <td>{{ $etapa->numero }}</td>
-                    <td>{{ $etapa->data }}</td>
-                    <td>
-                        <form action="{{ route('etapas.destroy', $etapa->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta etapa?');">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr data-campeonato="{{ $etapa->campeonato_id }}">
+                <td>{{ $etapa->id }}</td>
+                <td>{{ $etapa->campeonato->nome }}</td>
+                <td>{{ $etapa->nome }}</td>
+                <td>{{ $etapa->numero }}</td>
+                <td>{{ $etapa->data }}</td>
+                <td>
+                    @if($etapa->pilotos->count() > 0)
+                        <span class="badge bg-success">Cadastrados</span>
+                    @else
+                        <span class="badge bg-warning">Pendentes</span>
+                    @endif
+                </td>
+                <td>
+                    <form action="{{ route('etapas.destroy', $etapa->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta etapa?');">Excluir</button>
+                    </form>
+                    <a href="{{ route('etapas.resultados', $etapa->id) }}" class="btn btn-success btn-sm">Definir Resultados</a>
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>
@@ -83,7 +92,7 @@
         numeroEtapaInput.setAttribute('max', maxEtapas);
         numeroEtapaInput.setAttribute('min', 1);
         numeroEtapaInput.value = '';
-        
+
         document.querySelectorAll('#etapas_table tr').forEach(row => {
             if (selectedCampeonato === '' || row.getAttribute('data-campeonato') === selectedCampeonato) {
                 row.style.display = '';

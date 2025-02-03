@@ -15,5 +15,8 @@ Route::get('/', [VisaoGeralController::class, 'index'])->name('home');
 Route::get('/etapas', [EtapaController::class, 'index'])->name('etapas.index');
 Route::post('/etapas', [EtapaController::class, 'store'])->name('etapas.store');
 Route::delete('/etapas/{id}', [EtapaController::class, 'destroy'])->name('etapas.destroy');
-
+// Página para definir os resultados da etapa
+Route::get('/etapas/{id}/resultados', [EtapaController::class, 'gerenciarPilotos'])->name('etapas.resultados');
+// Salva a pontuação dos pilotos na etapa
+Route::post('/etapas/salvar-pontuacao', [EtapaController::class, 'salvarPontuacao'])->name('etapas.salvarPontuacao');
 
