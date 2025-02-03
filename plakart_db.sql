@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/02/2025 às 02:09
+-- Tempo de geração: 03/02/2025 às 03:31
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `campeonatos` (
 
 INSERT INTO `campeonatos` (`id`, `nome`, `etapas`, `created_at`, `updated_at`) VALUES
 (1, 'Champions', 4, '2025-02-02 02:10:15', '2025-02-02 03:12:28'),
-(2, 'Betinhas', 4, '2025-02-02 03:17:49', '2025-02-02 03:17:49');
+(2, 'Betinhas', 6, '2025-02-02 03:17:49', '2025-02-03 06:27:19');
 
 -- --------------------------------------------------------
 
@@ -63,10 +63,11 @@ CREATE TABLE `equipes` (
 --
 
 INSERT INTO `equipes` (`id`, `nome`, `campeonato_id`, `chefe_nome`, `created_at`, `updated_at`) VALUES
-(6, 'PipocaKart', 1, 'Elisa', '2025-02-02 03:49:22', '2025-02-02 03:49:22'),
 (7, 'Ferrari', 1, 'Vasemir', '2025-02-02 03:49:57', '2025-02-02 03:49:57'),
 (8, 'Mercedes', 1, 'Toto Wolf', '2025-02-02 03:50:47', '2025-02-02 03:50:47'),
-(11, 'Fed Full', 2, 'Cristhian Horner', '2025-02-02 05:01:19', '2025-02-02 05:01:19');
+(11, 'Red Bull Oracle', 1, 'Cristhian Horner', '2025-02-02 05:01:19', '2025-02-03 01:24:23'),
+(12, 'Mclaren', 2, 'Geralt De Rivia', '2025-02-03 01:16:47', '2025-02-03 01:19:32'),
+(13, 'IFMS-Fasters', 2, 'Ivones', '2025-02-03 06:26:05', '2025-02-03 06:27:34');
 
 -- --------------------------------------------------------
 
@@ -87,14 +88,84 @@ CREATE TABLE `equipe_piloto` (
 --
 
 INSERT INTO `equipe_piloto` (`id`, `equipe_id`, `piloto_id`, `created_at`, `updated_at`) VALUES
-(11, 6, 11, NULL, NULL),
-(12, 6, 12, NULL, NULL),
 (13, 7, 13, NULL, NULL),
 (14, 7, 14, NULL, NULL),
 (15, 8, 15, NULL, NULL),
 (16, 8, 16, NULL, NULL),
 (21, 11, 21, NULL, NULL),
-(22, 11, 22, NULL, NULL);
+(22, 11, 22, NULL, NULL),
+(23, 12, 23, NULL, NULL),
+(24, 12, 24, NULL, NULL),
+(25, 13, 25, NULL, NULL),
+(26, 13, 26, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `etapas`
+--
+
+CREATE TABLE `etapas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `campeonato_id` bigint(20) UNSIGNED NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `data` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `etapas`
+--
+
+INSERT INTO `etapas` (`id`, `campeonato_id`, `nome`, `numero`, `data`, `created_at`, `updated_at`) VALUES
+(1, 1, 'GP do Brasil', 1, '2025-03-10', '2025-02-03 04:24:58', '2025-02-03 04:24:58'),
+(4, 1, 'GP de Corumbá', 2, '2025-02-18', '2025-02-03 04:57:55', '2025-02-03 04:57:55'),
+(5, 2, 'GP de Corumbá', 1, '2025-03-25', '2025-02-03 04:59:52', '2025-02-03 04:59:52'),
+(6, 2, 'GP de Aquiduana', 2, '2025-02-20', '2025-02-03 06:24:29', '2025-02-03 06:24:29');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `etapa_piloto`
+--
+
+CREATE TABLE `etapa_piloto` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `etapa_id` bigint(20) UNSIGNED NOT NULL,
+  `piloto_id` bigint(20) UNSIGNED NOT NULL,
+  `posicao` int(11) NOT NULL,
+  `pontos` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Despejando dados para a tabela `etapa_piloto`
+--
+
+INSERT INTO `etapa_piloto` (`id`, `etapa_id`, `piloto_id`, `posicao`, `pontos`, `created_at`, `updated_at`) VALUES
+(1, 1, 14, 4, 12, NULL, NULL),
+(2, 1, 13, 1, 25, NULL, NULL),
+(3, 1, 21, 3, 15, NULL, NULL),
+(4, 1, 15, 6, 8, NULL, NULL),
+(5, 1, 16, 2, 18, NULL, NULL),
+(6, 1, 22, 5, 10, NULL, NULL),
+(7, 4, 13, 1, 25, NULL, NULL),
+(8, 4, 22, 2, 18, NULL, NULL),
+(9, 4, 14, 3, 15, NULL, NULL),
+(10, 4, 21, 4, 12, NULL, NULL),
+(11, 4, 15, 5, 10, NULL, NULL),
+(12, 4, 16, 6, 8, NULL, NULL),
+(13, 5, 24, 3, 15, NULL, NULL),
+(14, 5, 23, 1, 25, NULL, NULL),
+(15, 5, 25, 2, 18, NULL, NULL),
+(16, 5, 26, 4, 12, NULL, NULL),
+(17, 6, 26, 1, 25, NULL, NULL),
+(18, 6, 23, 2, 18, NULL, NULL),
+(19, 6, 24, 3, 15, NULL, NULL),
+(20, 6, 25, 4, 12, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -136,7 +207,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2025_02_01_182738_create_pilotos_table', 1),
 (6, '2025_02_01_182739_create_campeonatos_table', 1),
 (7, '2025_02_01_182740_create_equipes_table', 1),
-(8, '2025_02_01_183536_create_equipe_piloto_table', 1);
+(8, '2025_02_01_183536_create_equipe_piloto_table', 1),
+(10, '2025_02_02_224645_create_etapas_table', 2),
+(11, '2025_02_03_011314_create_etapa_piloto_table', 3);
 
 -- --------------------------------------------------------
 
@@ -188,14 +261,16 @@ CREATE TABLE `pilotos` (
 --
 
 INSERT INTO `pilotos` (`id`, `nome`, `numero`, `created_at`, `updated_at`) VALUES
-(11, 'Barbaro', 53, '2025-02-02 03:49:22', '2025-02-02 03:49:22'),
-(12, 'Samir', 2, '2025-02-02 03:49:22', '2025-02-02 03:49:22'),
 (13, 'Lewis Hamilton', 44, '2025-02-02 03:49:57', '2025-02-02 03:49:57'),
 (14, 'Charles Leclerc', 16, '2025-02-02 03:49:57', '2025-02-02 03:53:19'),
 (15, 'Kimi Antonielle', 12, '2025-02-02 03:50:47', '2025-02-02 03:50:47'),
 (16, 'Russell', 27, '2025-02-02 03:50:47', '2025-02-02 03:50:47'),
 (21, 'Max Vestappen', 33, '2025-02-02 05:01:19', '2025-02-02 05:01:19'),
-(22, 'Lawson', 85, '2025-02-02 05:01:19', '2025-02-02 05:01:19');
+(22, 'Lian Lawson', 85, '2025-02-02 05:01:19', '2025-02-03 01:02:59'),
+(23, 'Albatroz Feroz', 22, '2025-02-03 01:16:47', '2025-02-03 01:16:47'),
+(24, 'Renatin Cariani', 45, '2025-02-03 01:16:47', '2025-02-03 01:16:47'),
+(25, 'Lucas Silva', 31, '2025-02-03 06:26:05', '2025-02-03 06:26:05'),
+(26, 'Gustavo Sabia', 19, '2025-02-03 06:26:05', '2025-02-03 06:26:05');
 
 -- --------------------------------------------------------
 
@@ -238,6 +313,21 @@ ALTER TABLE `equipe_piloto`
   ADD PRIMARY KEY (`id`),
   ADD KEY `equipe_piloto_equipe_id_foreign` (`equipe_id`),
   ADD KEY `equipe_piloto_piloto_id_foreign` (`piloto_id`);
+
+--
+-- Índices de tabela `etapas`
+--
+ALTER TABLE `etapas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_etapas_campeonato` (`campeonato_id`);
+
+--
+-- Índices de tabela `etapa_piloto`
+--
+ALTER TABLE `etapa_piloto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `etapa_piloto_etapa_id_foreign` (`etapa_id`),
+  ADD KEY `etapa_piloto_piloto_id_foreign` (`piloto_id`);
 
 --
 -- Índices de tabela `failed_jobs`
@@ -288,19 +378,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `campeonatos`
 --
 ALTER TABLE `campeonatos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `equipes`
 --
 ALTER TABLE `equipes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `equipe_piloto`
 --
 ALTER TABLE `equipe_piloto`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de tabela `etapas`
+--
+ALTER TABLE `etapas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `etapa_piloto`
+--
+ALTER TABLE `etapa_piloto`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `failed_jobs`
@@ -312,7 +414,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `personal_access_tokens`
@@ -324,7 +426,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de tabela `pilotos`
 --
 ALTER TABLE `pilotos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de tabela `users`
@@ -348,6 +450,19 @@ ALTER TABLE `equipes`
 ALTER TABLE `equipe_piloto`
   ADD CONSTRAINT `equipe_piloto_equipe_id_foreign` FOREIGN KEY (`equipe_id`) REFERENCES `equipes` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `equipe_piloto_piloto_id_foreign` FOREIGN KEY (`piloto_id`) REFERENCES `pilotos` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `etapas`
+--
+ALTER TABLE `etapas`
+  ADD CONSTRAINT `fk_etapas_campeonato` FOREIGN KEY (`campeonato_id`) REFERENCES `campeonatos` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `etapa_piloto`
+--
+ALTER TABLE `etapa_piloto`
+  ADD CONSTRAINT `etapa_piloto_etapa_id_foreign` FOREIGN KEY (`etapa_id`) REFERENCES `etapas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `etapa_piloto_piloto_id_foreign` FOREIGN KEY (`piloto_id`) REFERENCES `pilotos` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
