@@ -50,6 +50,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('visao.geral') }}">Visão Geral</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('campeonatos.index') }}">Campeonatos</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('equipes.index') }}">Equipes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('etapas.index') }}">Etapas</a></li>
                 </ul>
             </div>
         </div>

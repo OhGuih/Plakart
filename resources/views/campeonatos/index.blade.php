@@ -55,6 +55,7 @@
 <div class="container">
     <h1>Lista de Campeonatos</h1>
     <a href="{{ route('campeonatos.create') }}" class="btn btn-success mb-3">Novo Campeonato</a>
+    <a href="{{ route('etapas.index') }}" class="btn btn-success mb-3">Gerenciar alguma Etapa</a>
 
     @if(session('success'))
         <div class="alert alert-success">
