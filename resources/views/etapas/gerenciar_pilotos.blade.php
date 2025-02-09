@@ -9,7 +9,9 @@
         @csrf
         <input type="hidden" name="etapa_id" value="{{ $etapa->id }}">
 
-        <h3>Ordem de Chegada</h3>
+        <h3>Ordem de Chegada </h3>
+        <h6>Arraste. Clique em algum piloto e arraste para a posição de chegada para definir</h6>
+        <a> </a>
         <ul id="pilotos-lista" class="list-group">
             @foreach($pilotos as $piloto)
                 <li class="list-group-item d-flex justify-content-between align-items-center" data-id="{{ $piloto->id }}">

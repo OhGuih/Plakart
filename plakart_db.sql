@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/02/2025 às 03:31
+-- Tempo de geração: 09/02/2025 às 21:16
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `campeonatos` (
 
 INSERT INTO `campeonatos` (`id`, `nome`, `etapas`, `created_at`, `updated_at`) VALUES
 (1, 'Champions', 4, '2025-02-02 02:10:15', '2025-02-02 03:12:28'),
-(2, 'Betinhas', 6, '2025-02-02 03:17:49', '2025-02-03 06:27:19');
+(2, 'Betinhas', 6, '2025-02-02 03:17:49', '2025-02-03 06:27:19'),
+(9, 'IFMS', 6, '2025-02-08 03:43:23', '2025-02-08 03:43:23');
 
 -- --------------------------------------------------------
 
@@ -67,7 +68,8 @@ INSERT INTO `equipes` (`id`, `nome`, `campeonato_id`, `chefe_nome`, `created_at`
 (8, 'Mercedes', 1, 'Toto Wolf', '2025-02-02 03:50:47', '2025-02-02 03:50:47'),
 (11, 'Red Bull Oracle', 1, 'Cristhian Horner', '2025-02-02 05:01:19', '2025-02-03 01:24:23'),
 (12, 'Mclaren', 2, 'Geralt De Rivia', '2025-02-03 01:16:47', '2025-02-03 01:19:32'),
-(13, 'IFMS-Fasters', 2, 'Ivones', '2025-02-03 06:26:05', '2025-02-03 06:27:34');
+(13, 'IFMS-Fasters', 9, 'Ivones', '2025-02-03 06:26:05', '2025-02-08 03:47:59'),
+(14, 'CodTorto', 9, 'Lucas', '2025-02-08 03:47:07', '2025-02-08 03:47:28');
 
 -- --------------------------------------------------------
 
@@ -97,7 +99,9 @@ INSERT INTO `equipe_piloto` (`id`, `equipe_id`, `piloto_id`, `created_at`, `upda
 (23, 12, 23, NULL, NULL),
 (24, 12, 24, NULL, NULL),
 (25, 13, 25, NULL, NULL),
-(26, 13, 26, NULL, NULL);
+(26, 13, 26, NULL, NULL),
+(27, 14, 27, NULL, NULL),
+(28, 14, 28, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,7 +127,8 @@ INSERT INTO `etapas` (`id`, `campeonato_id`, `nome`, `numero`, `data`, `created_
 (1, 1, 'GP do Brasil', 1, '2025-03-10', '2025-02-03 04:24:58', '2025-02-03 04:24:58'),
 (4, 1, 'GP de Corumbá', 2, '2025-02-18', '2025-02-03 04:57:55', '2025-02-03 04:57:55'),
 (5, 2, 'GP de Corumbá', 1, '2025-03-25', '2025-02-03 04:59:52', '2025-02-03 04:59:52'),
-(6, 2, 'GP de Aquiduana', 2, '2025-02-20', '2025-02-03 06:24:29', '2025-02-03 06:24:29');
+(6, 2, 'GP de Aquiduana', 2, '2025-02-20', '2025-02-03 06:24:29', '2025-02-03 06:24:29'),
+(8, 9, 'GP DE CORUMBA', 4, '2025-02-12', '2025-02-08 03:44:24', '2025-02-08 03:44:24');
 
 -- --------------------------------------------------------
 
@@ -146,12 +151,12 @@ CREATE TABLE `etapa_piloto` (
 --
 
 INSERT INTO `etapa_piloto` (`id`, `etapa_id`, `piloto_id`, `posicao`, `pontos`, `created_at`, `updated_at`) VALUES
-(1, 1, 14, 4, 12, NULL, NULL),
+(1, 1, 14, 2, 18, NULL, NULL),
 (2, 1, 13, 1, 25, NULL, NULL),
-(3, 1, 21, 3, 15, NULL, NULL),
-(4, 1, 15, 6, 8, NULL, NULL),
-(5, 1, 16, 2, 18, NULL, NULL),
-(6, 1, 22, 5, 10, NULL, NULL),
+(3, 1, 21, 5, 10, NULL, NULL),
+(4, 1, 15, 3, 15, NULL, NULL),
+(5, 1, 16, 4, 12, NULL, NULL),
+(6, 1, 22, 6, 8, NULL, NULL),
 (7, 4, 13, 1, 25, NULL, NULL),
 (8, 4, 22, 2, 18, NULL, NULL),
 (9, 4, 14, 3, 15, NULL, NULL),
@@ -165,7 +170,11 @@ INSERT INTO `etapa_piloto` (`id`, `etapa_id`, `piloto_id`, `posicao`, `pontos`, 
 (17, 6, 26, 1, 25, NULL, NULL),
 (18, 6, 23, 2, 18, NULL, NULL),
 (19, 6, 24, 3, 15, NULL, NULL),
-(20, 6, 25, 4, 12, NULL, NULL);
+(20, 6, 25, 4, 12, NULL, NULL),
+(21, 8, 27, 1, 25, NULL, NULL),
+(22, 8, 28, 2, 18, NULL, NULL),
+(23, 8, 25, 3, 15, NULL, NULL),
+(24, 8, 26, 4, 12, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -269,8 +278,10 @@ INSERT INTO `pilotos` (`id`, `nome`, `numero`, `created_at`, `updated_at`) VALUE
 (22, 'Lian Lawson', 85, '2025-02-02 05:01:19', '2025-02-03 01:02:59'),
 (23, 'Albatroz Feroz', 22, '2025-02-03 01:16:47', '2025-02-03 01:16:47'),
 (24, 'Renatin Cariani', 45, '2025-02-03 01:16:47', '2025-02-03 01:16:47'),
-(25, 'Lucas Silva', 31, '2025-02-03 06:26:05', '2025-02-03 06:26:05'),
-(26, 'Gustavo Sabia', 19, '2025-02-03 06:26:05', '2025-02-03 06:26:05');
+(25, 'Guilherme', 32, '2025-02-03 06:26:05', '2025-02-08 03:47:59'),
+(26, 'Julia', 17, '2025-02-03 06:26:05', '2025-02-08 03:47:59'),
+(27, 'Samuel', 25, '2025-02-08 03:47:07', '2025-02-08 03:47:07'),
+(28, 'Gustavo', 2, '2025-02-08 03:47:07', '2025-02-08 03:47:07');
 
 -- --------------------------------------------------------
 
@@ -378,31 +389,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de tabela `campeonatos`
 --
 ALTER TABLE `campeonatos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `equipes`
 --
 ALTER TABLE `equipes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `equipe_piloto`
 --
 ALTER TABLE `equipe_piloto`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `etapas`
 --
 ALTER TABLE `etapas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `etapa_piloto`
 --
 ALTER TABLE `etapa_piloto`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `failed_jobs`
@@ -426,7 +437,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de tabela `pilotos`
 --
 ALTER TABLE `pilotos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de tabela `users`

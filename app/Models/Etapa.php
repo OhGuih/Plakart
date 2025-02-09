@@ -18,7 +18,7 @@ class Etapa extends Model
         'data',
     ];
 
-    // Relacionamento com Campeonato
+    
     public function campeonato()
     {
         return $this->belongsTo(Campeonato::class);

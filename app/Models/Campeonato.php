@@ -9,7 +9,7 @@ class Campeonato extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'etapas']; // Permite inserção em massa desses campos
+    protected $fillable = ['nome', 'etapas']; 
     public function equipes()
 {
     return $this->hasMany(Equipe::class, 'campeonato_id');

@@ -89,7 +89,7 @@
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
     </form>
 
-    {{-- Formulário de Exclusão - Agora separado --}}
+    {{-- Formulário de Exclusão --}}
     <form action="{{ route('campeonatos.destroy', $campeonato->id) }}" method="POST" class="mt-3">
         @csrf
         @method('DELETE')
